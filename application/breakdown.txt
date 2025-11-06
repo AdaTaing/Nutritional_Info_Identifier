@@ -1,0 +1,9 @@
+Languages: 
+    - JavaScript
+    - Python
+
+Tools/Libraries:
+    - Label Studio
+    - React
+    - Pytorch
+    - Yolov11
