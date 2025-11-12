@@ -1,0 +1,7 @@
+Python:
+need 3.12  because of roboflow
+    - Create python environment
+        - install packages: torch, torch vision, ultralytic, requests, roboflow
+            - for ultralytics, need t have c/c++ compiler for vs
+        - use Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted if warning is "permisions not granted for script running"
+        - 
