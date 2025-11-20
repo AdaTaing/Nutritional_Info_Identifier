@@ -10,3 +10,33 @@ Training:
     - Augmentation
         - roboflow has something that can create new cases from images
         
+Datasets Used:
+    - https://www.kaggle.com/datasets/aelchimminut/fruits262
+    - food101
+    - 
+
+List of food:
+
+    Fruit:
+    fruits = [
+        "apple", "banana", "orange", "grape", "pear", "peach", "plum", "cherry",
+        "strawberry", "blueberry", "raspberry", "blackberry", "cantaloupe",
+        "honeydew", "watermelon", "pineapple", "kiwi", "mango", "papaya",
+        "grapefruit", "lemon", "lime", "tangerine", "clementine", "mandarin",
+        "date", "fig", "durian", "jackfruit", "lychee", "longan", "rambutan",
+        "dragon fruit", "pitaya", "passion fruit", "guava", "starfruit",
+        "carambola", "mangosteen", "tamarind", "soursop", "sapodilla",
+        "breadfruit", "custard apple", "cherimoya", "atemoya", "nance", "feijoa",
+        "jabuticaba", "langsat", "santol", "salak", "snake fruit", "kiwano",
+        "horned melon", "malay apple", "jujube", "pomelo", "bergamot", "kumquat",
+        "yuzu", "sudachi", "calamansi", "ugli fruit", "apricot", "nectarine",
+        "mulberry", "cranberry", "gooseberry", "boysenberry", "loganberry",
+        "huckleberry", "elderberry", "currant", "lingonberry", "acai", "cloudberry",
+        "barberry", "sea buckthorn", "chokeberry", "aronia", "canary melon",
+        "galia melon", "santa claus melon", "winter melon", "quince",
+        "asian pear", "plantain", "persimmon", "medlar", "loquat", "rowan berry",
+        "serviceberry", "mayapple", "hackberry", "buffaloberry", "imbe",
+        "mexican breadfruit", "mamey sapote", "white sapote", "lucuma",
+        "miracle fruit", "amla", "indian gooseberry", "baobab fruit", "cupuacu",
+        "marang"
+    ]
