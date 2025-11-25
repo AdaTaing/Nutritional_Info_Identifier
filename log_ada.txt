@@ -13,7 +13,7 @@ Training:
 Datasets Used:
     - https://www.kaggle.com/datasets/aelchimminut/fruits262
     - food101
-    - 
+    - google open images
 
 List of food:
 
@@ -57,3 +57,36 @@ List of food:
         "plantain"  # banana-like but used as a vegetable
     ]
 
+Come back to later
+    - peaches
+    - plum
+    - honeydew
+    - tangerine
+    - 
+
+Folders with images right now:
+    - apple
+    - pear
+    - grape
+    - orange
+    - banana
+    - acai
+    - cherry
+    - strawberry
+    - blueberry
+    - raspberry
+    - blackberry
+    - cantaloupe
+    - watermelon
+    - pineapple
+    - kiwi
+    - mango
+    - papaya
+    - grapefruit
+    - lemon
+    - lime
+    - clementine
+    - mandarin
+    - date
+    - fig
+    - 
