@@ -1,0 +1,150 @@
+Python:
+need 3.12  because of roboflow
+    - Create python environment
+        - install packages: torch, torch vision, ultralytic, requests, roboflow, opencv
+            - for ultralytics, need t have c/c++ compiler for vs
+        - use Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted if warning is "permisions not granted for script running"
+        - 
+
+roboflow no longer use because of storage capacity limits
+
+Switch to label studio
+email: nutridex_comp4990_proj@gmail.com
+pwd: NU--tri++03x
+project name: Nutrition Identifier
+
+Training:
+    - Augmentation
+        - roboflow has something that can create new cases from images
+        
+Datasets Used:
+    - https://www.kaggle.com/datasets/aelchimminut/fruits262
+    - food101
+    - google open images
+
+List of food:'
+
+    Current list:
+    ['acai', 'acorn squash', 'amla', 'apple', 'apricot', 'aronia', 'artichoke', 'arugula', 'asian_pear', 
+     'asparagus', 'atemoya', 'aubergine', 'banana', 'baobab_fruit', 'barberry', 'beet', 'beetroot', 
+     'bell pepper', 'bergamot', 'blackberry', 'blueberry', 'bok choy', 'boysenberry', 'breadfruit', 
+     'broccoli', 'broccolini', 'brussels sprouts', 'buffaloberry', 'butternut squash', 'cabbage', 
+     'calamansi', 'canary_melon', 'cantaloupe', 'carambola', 'carrot', 'cassava', 'cauliflower', 
+     'celery', 'chard', 'cherimoya', 'cherry', 'chokeberry', 'clementine', 'cloudberry', 
+     'collard greens', 'corn', 'cranberry', 'cucumber', 'cupuacu', 'currant', 'custard_apple', 
+     'daikon', 'date', 'dragon fruit', 'dragon_fruit', 'durian', 'edamame', 'eggplant', 'elderberry', 
+     'endive', 'feijoa', 'fennel', 'fig', 'galia_melon', 'garlic', 'ginger', 'gooseberry', 'grape', 
+     'grapefruit', 'green bean', 'guava', 'hackberry', 'honeydew', 'horned_melon', 'horseradish', 
+     'huckleberry', 'imbe', 'indian_gooseberry', 'jabuticaba', 'jackfruit', 'jicama', 'jujube', 'kale', 
+     'kiwano', 'kiwi', 'kohlrabi', 'kumquat', 'langsat', 'leek', 'lemon', 'lettuce', 'lime', 'lingonberry', 
+     'loganberry', 'longan', 'loquat', 'lucuma', 'lychee', 'malay_apple', 'mamey_sapote', 'mandarin', 
+     'mango', 'mangosteen', 'marang', 'mayapple', 'medlar', 'mexican_breadfruit', 'miracle_fruit', 'mulberry', 
+     'mushroom', 'nance', 'nectarine', 'okra', 'olive', 'onion', 'orange', 'papaya', 'parsnip', 
+     'passion_fruit', 'peach', 'pear', 'peas', 'persimmon', 'pineapple', 'pitaya', 'plantain', 'plum', 
+     'pomelo', 'potato', 'pumpkin', 'quince', 'radish', 'rambutan', 'raspberry', 'rowan_berry', 'rutabaga', 
+     'salak', 'santa_claus_melon', 'santol', 'sapodilla', 'scallion', 'sea_buckthorn', 'serviceberry', 'shallot', 
+     'snake fruit', 'snake_fruit', 'snap pea', 'snow pea', 'soursop', 'spinach', 'spring onion', 'squash', 
+     'starfruit', 'strawberry', 'sudachi', 'sweet potato', 'tamarind', 'tangerine', 'taro', 'tomato', 'turnip', 
+     'ugli_fruit', 'watercress', 'watermelon', 'white_sapote', 'winter_melon', 'yam', 'yuzu', 'zucchini']
+
+    Fruit:
+    fruits = [
+        "apple", "banana", "orange", "grape", "pear", "peach", "plum", "cherry",
+        "strawberry", "blueberry", "raspberry", "blackberry", "cantaloupe",
+        "honeydew", "watermelon", "pineapple", "kiwi", "mango", "papaya",
+        "grapefruit", "lemon", "lime", "tangerine", "clementine", "mandarin",
+        "date", "fig", "durian", "jackfruit", "lychee", "longan", "rambutan",
+        "dragon fruit", "pitaya", "passion fruit", "guava", "starfruit",
+        "carambola", "mangosteen", "tamarind", "soursop", "sapodilla",
+        "breadfruit", "custard apple", "cherimoya", "atemoya", "nance", "feijoa",
+        "jabuticaba", "langsat", "santol", "salak", "snake fruit", "kiwano",
+        "horned melon", "malay apple", "jujube", "pomelo", "bergamot", "kumquat",
+        "yuzu", "sudachi", "calamansi", "ugli fruit", "apricot", "nectarine",
+        "mulberry", "cranberry", "gooseberry", "boysenberry", "loganberry",
+        "huckleberry", "elderberry", "currant", "lingonberry", "acai", "cloudberry",
+        "barberry", "sea buckthorn", "chokeberry", "aronia", "canary melon",
+        "galia melon", "santa claus melon", "winter melon", "quince",
+        "asian pear", "plantain", "persimmon", "medlar", "loquat", "rowan berry",
+        "serviceberry", "mayapple", "hackberry", "buffaloberry", "imbe",
+        "mexican breadfruit", "mamey sapote", "white sapote", "lucuma",
+        "miracle fruit", "amla", "indian gooseberry", "baobab fruit", "cupuacu",
+        "marang"
+    ]
+
+    Vegetables:
+    vegetables = [
+        "artichoke", "arugula", "asparagus", "aubergine", "eggplant", "beet",
+        "beetroot", "bell pepper", "bok choy", "broccoli", "broccolini",
+        "brussels sprouts", "cabbage", "carrot", "cauliflower", "celery",
+        "chard", "collard greens", "corn", "cucumber", "daikon", "radish",
+        "edamame", "endive", "fennel", "garlic", "ginger", "green bean",
+        "snap pea", "snow pea", "peas", "horseradish", "jicama", "kale",
+        "kohlrabi", "leek", "lettuce", "mushroom", "okra", "olive",
+        "onion", "shallot", "spring onion", "scallion", "parsnip",
+        "potato", "sweet potato", "pumpkin", "squash", "acorn squash",
+        "butternut squash", "zucchini", "spinach", "tomato", "turnip",
+        "rutabaga", "watercress", "yam", "cassava", "taro",
+        "plantain"  # banana-like but used as a vegetable
+    ]
+
+Come back to later
+    - peaches
+    - plum
+    - honeydew
+    - tangerine
+    - 
+
+Folders with images right now:
+    - apple
+    - pear
+    - grape
+    - orange
+    - banana
+    - acai
+    - cherry
+    - strawberry
+    - blueberry
+    - raspberry
+    - blackberry
+    - cantaloupe
+    - watermelon
+    - pineapple
+    - kiwi
+    - mango
+    - papaya
+    - grapefruit
+    - lemon
+    - lime
+    - clementine
+    - mandarin
+    - date
+    - fig
+    ----*
+    - 
+
+Folder image count:
+    - 1204
+    - 1008
+    - 1034
+    - 822
+    - 1163
+    - 1107
+    - 1004
+    - 1003
+    - 1003
+    - 1013
+    - 1130
+    - 1009
+    - 997
+    - 1038
+    - 1011
+    - 1026
+    - 1028
+    - 1013
+    - 1012
+    - 1011
+    - 1007
+    - 1016
+    - 1003
+    - 1013 ----*
+    - 
