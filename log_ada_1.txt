@@ -22,6 +22,23 @@ Datasets Used:
     - food101
     - google open images
 
+datasets to check out
+- pixabay
+- pexels
+- vicos
+
+
+Front end:
+    - React Native
+    - Expo (for deployment)
+
+To start:
+    - cd or open in terminal: application\front_end\Nutritional_Info_Identifier_App
+    - npx expo start 
+    - scan qr code with the expo go app
+    - ctrl c in terminal to stop
+    - always save to refresh app changes
+
 List of food:'
 
     Current list:
