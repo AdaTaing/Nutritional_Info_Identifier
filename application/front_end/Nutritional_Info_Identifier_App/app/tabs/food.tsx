@@ -1,186 +1,155 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import type { PropsWithChildren } from "react";
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
-/*export default function FoodScreen() {
+export default function FoodScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Detected Food</Text>
+    <View style={styles.page}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Apple</Text>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Name:</Text>
-        <Text>This will show the name of the food identified</Text>
-      </View>
+        {/* Breakdown card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Breakdown</Text>
+          <View style={styles.piePlaceholder}>
+            <Text style={{ textAlign: "center" }}>
+              Pie Chart{"\n"}(placeholder)
+            </Text>
+          </View>
+        </View>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Calories:</Text>
-        <Text>This will show the calories of the food identified</Text>
-      </View>
+        {/* Nutrition card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Nutritional Info</Text>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Nutritioinal Facts:</Text>
-        <Text>This will show the nutritional information of the food</Text>
-      </View>
+          <View style={styles.row}>
+            <Text>Calories</Text>
+            <Text>80</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text>Carbohydrates</Text>
+            <Text>80g</Text>
+          </View>
+
+
+          <View style={styles.row}>
+            <Text>Protein</Text>
+            <Text>1g</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text>Fat</Text>
+            <Text>0g</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text>Sodium</Text>
+            <Text>0g</Text>
+          </View>
+        </View>
+
+        {/* Recipes card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Related Recipes</Text>
+
+          <View style={styles.recipeItem}>
+            <Image
+              source={{
+                uri: "https://images.unsplash.com/photo-1562007908-17c67e878c88",
+              }}
+              style={styles.recipeImage}
+            />
+            <Text>Granny’s Apple Pie</Text>
+          </View>
+
+          <View style={styles.recipeItem}>
+            <Image
+              source={{
+                uri: "https://images.unsplash.com/photo-1605478580703-8c4b1d07a2b6",
+              }}
+              style={styles.recipeImage}
+            />
+            <Text>Baked Apples</Text>
+          </View>
+
+          <View style={styles.recipeItem}>
+            <Image
+              source={{
+                uri: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+              }}
+              style={styles.recipeImage}
+            />
+            <Text>Apple Salad</Text>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  page: {
     flex: 1,
+    backgroundColor: "#E8E2C8",
+  },
+
+  container: {
     padding: 20,
-    backgroundColor: "#fff",
+    paddingBottom: 40,
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "600",
-    marginBottom: 16,
+    marginBottom: 20,
+  },
+
+  card: {
+    backgroundColor: "#F4F1E6",
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+  },
+
+  cardTitle: {
+    fontSize: 18,
+    marginBottom: 15,
+    fontWeight: "500",
+  },
+
+  piePlaceholder: {
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: "#D9D9D9",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    width: 140,
   },
 
   row: {
     flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
 
-  label: {
-    width: 100,
-    fontWeight: "500",
-    color: "#555",
+  recipeItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
   },
-});*/
 
-const FoodScreen = () => {
-  const [activeTab, setActiveTab] = useState('Name');
-
-  return (
-    <View style={styles.pagecontainer}>
-      <PreviewLayout
-        label="Food Info"
-        values={[
-          'Name',
-          'Calories',
-          'Nutritional Information',
-          'Related Recipes',
-        ]}
-        selectedValue={activeTab}
-        setSelectedValue={setActiveTab}
-      />
-    </View>
-  );
-};
-
-type PreviewLayoutProps = PropsWithChildren<{
-  label: string;
-  values: string[];
-  selectedValue: string;
-  setSelectedValue: (value: string) => void;
-}>;
-
-//this has stuff related to the content of each tab
-const PreviewLayout = ({
-  label,
-  values,
-  selectedValue,
-  setSelectedValue,
-}: PreviewLayoutProps) => (
-  <View style={{ padding: 10, flex: 1 }}>
-    <Text style={styles.label}>{label}</Text>
-
-    <View style={styles.row}>
-      {values.map(value => (
-        <TouchableOpacity
-          key={value}
-          onPress={() => setSelectedValue(value)}
-          style={[
-            styles.button,
-            selectedValue === value && styles.selected,
-          ]}
-        >
-          <Text
-            style={[
-              styles.buttonLabel,
-              selectedValue === value && styles.selectedLabel,
-            ]}
-          >
-            {value}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-    <View style={styles.container}> 
-      {selectedValue === 'Name' && (
-        <Text>Food Name</Text>
-      )}
-
-      {selectedValue === 'Calories' && (
-        <Text>calories</Text>
-      )}
-
-      {selectedValue === 'Nutritional Information' && (
-        <Text>
-          food facts
-        </Text>
-      )}
-
-      {selectedValue === 'Related Recipes' && (
-        <Text>
-          recipes list
-        </Text>
-      )}
-    </View>
-  </View>
-  //Content for each tab ^^^^
-);
-
-const styles = StyleSheet.create({
-  pagecontainer:{
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50,
-  },
-  container: {
-    flex: 1,
-    marginTop: 8,
-    backgroundColor: 'aliceblue',
-  },
-  box: {
-    width: 50,
-    height: 50,
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  button: {
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 4,
-    backgroundColor: 'oldlace',
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
-    marginBottom: 6,
-    minWidth: '48%',
-    textAlign: 'center',
-  },
-  selected: {
-    backgroundColor: 'coral',
-    borderWidth: 0,
-  },
-  buttonLabel: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: 'coral',
-  },
-  selectedLabel: {
-    color: 'white',
-  },
-  label: {
-    textAlign: 'center',
-    marginBottom: 10,
-    fontSize: 24,
+  recipeImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
   },
 });
-
-export default FoodScreen;

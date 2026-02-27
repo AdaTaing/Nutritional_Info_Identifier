@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { setLatestPhoto } from "../../scanStore";
+import { useRouter } from "expo-router";
 
 export default function CameraScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -23,7 +26,8 @@ export default function CameraScreen() {
       quality: 0.6,
     });
 
-    console.log("Captured image:", photo.uri);
+    setLatestPhoto(photo.uri);
+    router.push("/tabs/food");
   };
 
   return (
