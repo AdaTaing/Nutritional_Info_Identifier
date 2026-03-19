@@ -4,22 +4,31 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   SafeAreaView,
   Dimensions,
   TouchableOpacity
 } from "react-native";
-import { useRouter } from "expo-router"; // Keep this for navigation
+import { useRouter } from "expo-router"; 
+import PieChart from 'react-native-pie-chart';
 
 const { width } = Dimensions.get('window');
 
 export default function FoodScreen() {
   const router = useRouter();
 
+  // Using hardcoded macros
+  const carbs = 25;
+  const protein = 1;
+  const fat = 1; 
+
+  const series = [
+    { value: carbs, color: '#EB9E64' }, 
+    { value: protein, color: '#7DA9F4' },  
+    { value: fat, color: '#E8D2A6' }   
+  ];
+
   return (
     <SafeAreaView style={styles.page}>
-      
-      {/* Back Arrow Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Text style={styles.backArrow}>←</Text>
@@ -29,104 +38,88 @@ export default function FoodScreen() {
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Apple</Text>
 
-        {/* Breakdown card */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Breakdown</Text>
-          <View style={styles.piePlaceholder}>
-             {/* Text removed so it looks like the empty circle in Figma */}
+          
+          <View style={{ alignItems: 'center', marginBottom: 15 }}>
+            <PieChart
+              widthAndHeight={140}
+              series={series}
+              coverRadius={0.5} 
+            />
           </View>
-          <Text style={styles.chartCaption}>this will be a pie chart{"\n"}i'm working on it</Text>
+
+          <View style={styles.legendContainer}>
+            <View style={styles.legendItem}>
+              <View style={[styles.colorDot, { backgroundColor: '#EB9E64' }]} />
+              <Text style={styles.legendText}>Carbs</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.colorDot, { backgroundColor: '#7DA9F4' }]} />
+              <Text style={styles.legendText}>Protein</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.colorDot, { backgroundColor: '#E8D2A6' }]} />
+              <Text style={styles.legendText}>Fat</Text>
+            </View>
+          </View>
         </View>
 
-        {/* Nutrition card */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Nutritional Info</Text>
 
           <View style={styles.row}>
             <Text style={styles.rowText}>Calories</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>95</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.rowText}>Carbohydrates</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>{carbs}g</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={[styles.rowText, styles.indent]}>Fiber</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>4g</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={[styles.rowText, styles.indent]}>Sugar</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>19g</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.rowText}>Protein</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>{protein}g</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.rowText}>Fat</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>{fat}g</Text>
           </View>
           
           <View style={styles.row}>
             <Text style={[styles.rowText, styles.indent]}>Saturated</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>0g</Text>
           </View>
           
           <View style={styles.row}>
             <Text style={[styles.rowText, styles.indent]}>Mono</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>0g</Text>
           </View>
           
           <View style={styles.row}>
             <Text style={[styles.rowText, styles.indent]}>Cholesterol</Text>
-            <Text style={styles.rowText}>80</Text>
+            <Text style={styles.rowText}>0mg</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.rowText}>Sodium</Text>
-            <Text style={styles.rowText}>80</Text>
-          </View>
-        </View>
-
-        {/* Recipes card */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Related Recipes</Text>
-
-          <View style={styles.recipeItem}>
-            <Image
-              source={{ uri: "https://images.unsplash.com/photo-1562007908-17c67e878c88" }}
-              style={styles.recipeImage}
-            />
-            <Text style={styles.recipeText}>Granny’s Apple Pie</Text>
-            <Text style={styles.arrowIcon}>↗</Text>
-          </View>
-
-          <View style={styles.recipeItem}>
-            <Image
-              source={{ uri: "https://images.unsplash.com/photo-1605478580703-8c4b1d07a2b6" }}
-              style={styles.recipeImage}
-            />
-            <Text style={styles.recipeText}>Baked Apples</Text>
-            <Text style={styles.arrowIcon}>↗</Text>
-          </View>
-
-          <View style={styles.recipeItem}>
-            <Image
-              source={{ uri: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c" }}
-              style={styles.recipeImage}
-            />
-            <Text style={styles.recipeText}>Apple Salad</Text>
-            <Text style={styles.arrowIcon}>↗</Text>
+            <Text style={styles.rowText}>2mg</Text>
           </View>
         </View>
       </ScrollView>
 
-      {/* Floating Bottom Navigation */}
       <View style={styles.bottomNavContainer}>
         <View style={styles.togglePill}>
           <TouchableOpacity 
@@ -148,7 +141,7 @@ export default function FoodScreen() {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: "#F9F5E3", // Updated to match Figma cream
+    backgroundColor: "#F9F5E3", 
   },
   header: {
     paddingHorizontal: 20,
@@ -161,7 +154,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    paddingBottom: 130, // Extra padding so the scroll clears the floating nav
+    paddingBottom: 130, 
   },
   title: {
     fontSize: 48,
@@ -170,8 +163,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
-    backgroundColor: "#FFFFFF", // White cards
-    borderRadius: 30, // Large border radius
+    backgroundColor: "#FFFFFF", 
+    borderRadius: 30, 
     padding: 24,
     marginBottom: 20,
   },
@@ -180,22 +173,6 @@ const styles = StyleSheet.create({
     fontFamily: 'InstrumentSerif',
     marginBottom: 20,
     color: '#1A1A1A',
-  },
-  piePlaceholder: {
-    height: 140,
-    width: 140,
-    borderRadius: 70,
-    backgroundColor: "#D9D9D9",
-    alignSelf: "center",
-    marginBottom: 10,
-  },
-  chartCaption: {
-    fontSize: 16,
-    fontFamily: 'InstrumentSerif-Italic', // Italic for this specific text
-    textAlign: 'right',
-    marginTop: -20, // Negative margin to overlap the circle slightly
-    marginRight: 10,
-    color: '#333'
   },
   row: {
     flexDirection: "row",
@@ -209,31 +186,7 @@ const styles = StyleSheet.create({
   },
   indent: {
     paddingLeft: 20,
-    fontSize: 16, // Slightly smaller for sub-items
-  },
-  recipeItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#F3E5D5", // Muted tan background for recipes
-    borderRadius: 20,
-    padding: 10,
-    marginBottom: 12,
-  },
-  recipeImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 15, // Rounder image corners
-    marginRight: 15,
-  },
-  recipeText: {
-    flex: 1,
-    fontFamily: 'InstrumentSerif',
-    fontSize: 20,
-  },
-  arrowIcon: {
-    fontSize: 18,
-    fontFamily: 'InstrumentSerif',
-    paddingRight: 5,
+    fontSize: 16, 
   },
   bottomNavContainer: {
     position: 'absolute',
@@ -248,7 +201,6 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 32,
     padding: 6,
-    // Shadow for depth
     elevation: 8,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -257,7 +209,7 @@ const styles = StyleSheet.create({
   },
   toggleActive: {
     flex: 1,
-    backgroundColor: '#EB9E64', // Figma Orange
+    backgroundColor: '#EB9E64', 
     borderRadius: 28,
     justifyContent: 'center',
     alignItems: 'center',
@@ -276,5 +228,25 @@ const styles = StyleSheet.create({
     color: '#EB9E64',
     fontSize: 24,
     fontFamily: 'InstrumentSerif',
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 15, 
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  colorDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 6,
+  },
+  legendText: {
+    fontFamily: 'InstrumentSerif',
+    fontSize: 16,
+    color: '#333',
   },
 });
