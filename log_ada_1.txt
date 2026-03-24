@@ -39,7 +39,7 @@ To start:
     - ctrl c in terminal to stop
     - always save to refresh app changes
 
-List of food:'
+List of food:
 
     Current list:
     ['acai', 'acorn squash', 'amla', 'apple', 'apricot', 'aronia', 'artichoke', 'arugula', 'asian_pear', 

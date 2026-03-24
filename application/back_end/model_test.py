@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import os
 
 # --- Configuration ---
-model_path = "application/back_end/models/best.pt"        # path to your trained model
-input_folder = "application/back_end/test_imgs"  # folder with images to test
-output_folder = "application/back_end/test_results"     # folder to save annotated images
+model_path = "application/back_end/Object_Detection/models/best.pt"        # path to your trained model
+input_folder = "application/back_end/Object_Detection/test_imgs"  # folder with images to test
+output_folder = "application/back_end/Object_Detection/test_results"     # folder to save annotated images
 display_time = 1000           # milliseconds to display each image (0 = wait for key)
 
 # Create output folder if it doesn't exist
