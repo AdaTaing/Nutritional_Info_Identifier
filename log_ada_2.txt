@@ -1,0 +1,15 @@
+method 1:
+- use roboflow and its auto labeller to annotate 5000 images
+- failed
+
+method 2:
+- label studio
+- use yolo as an auto labeller
+- failed due to limited capabilities
+
+method 3:
+- use roboflow 
+- train images in stages
+- delete old images on roboflow while maintaining them locally in the project Folder
+- store any training data in a single Folder
+- combine all training data while training
