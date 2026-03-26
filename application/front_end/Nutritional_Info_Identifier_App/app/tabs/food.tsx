@@ -27,16 +27,16 @@ export default function FoodScreen() {
 
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const [foodName, setFoodName] = useState("Scan food");
+  const [foodName, setFoodName] = useState("Take a picture");
+  const [hasData, setHasData] = useState(false);
 
   const [calories, setCalories] = useState(0);
   const [carbs, setCarbs] = useState(0);
   const [protein, setProtein] = useState(0);
   const [fat, setFat] = useState(0);
 
-  // runs every time screen is opened
   useFocusEffect(
     useCallback(() => {
 
@@ -45,14 +45,26 @@ export default function FoodScreen() {
     }, [])
   );
 
+  const capitalize = (text: string) => {
+    if (!text) return "";
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
   const analyzePhoto = async () => {
 
     const photoUri = getLatestPhoto();
 
+    // FIRST LOAD (no photo yet)
     if (!photoUri) {
 
+      setFoodName("Take a picture");
+      setHasData(false);
       setLoading(false);
-      setFoodName("Scan food");
+
+      setCalories(0);
+      setCarbs(0);
+      setProtein(0);
+      setFat(0);
 
       return;
     }
@@ -85,13 +97,14 @@ export default function FoodScreen() {
 
       const data = await response.json();
 
-      console.log("NEW SCAN:", data);
+      console.log("SCAN RESULT:", data);
 
       clearLatestPhoto();
 
       if (!data?.nutrition_result?.ok) {
 
-        setFoodName(data.detected_food ?? "Unknown");
+        setFoodName(capitalize(data.detected_food ?? "Unknown"));
+        setHasData(true);
 
         setCalories(0);
         setCarbs(0);
@@ -105,7 +118,7 @@ export default function FoodScreen() {
 
       const nutrition = data.nutrition_result.nutrition;
 
-      setFoodName(data.detected_food);
+      setFoodName(capitalize(data.detected_food));
 
       setCalories(nutrition.calories_kcal ?? 0);
 
@@ -115,6 +128,8 @@ export default function FoodScreen() {
 
       setFat(nutrition.fat_g ?? 0);
 
+      setHasData(true);
+
       setLoading(false);
 
     } catch (err) {
@@ -122,6 +137,7 @@ export default function FoodScreen() {
       console.log("SCAN ERROR:", err);
 
       setFoodName("Server error");
+      setHasData(false);
 
       setLoading(false);
 
@@ -129,7 +145,6 @@ export default function FoodScreen() {
 
   };
 
-  // prevents crash when values are 0
   const total = carbs + protein + fat;
 
   const series = total === 0
@@ -167,7 +182,21 @@ export default function FoodScreen() {
 
         )}
 
-        {!loading && (
+        {!loading && !hasData && (
+
+          <View style={styles.placeholderBox}>
+
+            <Text style={styles.placeholderText}>
+
+              📸 Take a photo to see nutrition info
+
+            </Text>
+
+          </View>
+
+        )}
+
+        {!loading && hasData && (
 
           <>
 
@@ -179,11 +208,11 @@ export default function FoodScreen() {
 
               </Text>
 
-              <View style={{ alignItems: "center", marginBottom: 15 }}>
+              <View style={{ alignItems: "center", marginBottom: 20 }}>
 
                 <PieChart
 
-                  widthAndHeight={140}
+                  widthAndHeight={150}
 
                   series={series}
 
@@ -223,25 +252,25 @@ export default function FoodScreen() {
 
             </View>
 
-            <TouchableOpacity
-
-              style={styles.scanButton}
-
-              onPress={() => router.push("/tabs/camera")}
-
-            >
-
-              <Text style={styles.scanText}>
-
-                Scan Again
-
-              </Text>
-
-            </TouchableOpacity>
-
           </>
 
         )}
+
+        <TouchableOpacity
+
+          style={styles.scanButton}
+
+          onPress={() => router.push("/tabs/camera")}
+
+        >
+
+          <Text style={styles.scanText}>
+
+            Scan Food
+
+          </Text>
+
+        </TouchableOpacity>
 
       </ScrollView>
 
@@ -294,16 +323,35 @@ const styles = StyleSheet.create({
 
   container: {
 
-    padding: 20,
-    paddingBottom: 120
+    padding: 25,
+    paddingTop: 40,
+    paddingBottom: 150
 
   },
 
   title: {
 
-    fontSize: 42,
+    fontSize: 44,
     fontFamily: "InstrumentSerif",
+    marginBottom: 25
+
+  },
+
+  placeholderBox: {
+
+    backgroundColor: "#fff",
+    borderRadius: 25,
+    padding: 40,
+    alignItems: "center",
     marginBottom: 20
+
+  },
+
+  placeholderText: {
+
+    fontFamily: "InstrumentSerif",
+    fontSize: 20,
+    opacity: 0.7
 
   },
 
@@ -311,9 +359,9 @@ const styles = StyleSheet.create({
 
     backgroundColor: "#fff",
 
-    borderRadius: 28,
+    borderRadius: 30,
 
-    padding: 24,
+    padding: 26,
 
     marginBottom: 20
 
@@ -321,11 +369,11 @@ const styles = StyleSheet.create({
 
   cardTitle: {
 
-    fontSize: 24,
+    fontSize: 26,
 
     fontFamily: "InstrumentSerif",
 
-    marginBottom: 15
+    marginBottom: 20
 
   },
 
@@ -335,7 +383,7 @@ const styles = StyleSheet.create({
 
     justifyContent: "space-between",
 
-    paddingVertical: 6
+    paddingVertical: 7
 
   },
 
@@ -343,7 +391,7 @@ const styles = StyleSheet.create({
 
     fontFamily: "InstrumentSerif",
 
-    fontSize: 18
+    fontSize: 19
 
   },
 
@@ -353,7 +401,7 @@ const styles = StyleSheet.create({
 
     justifyContent: "center",
 
-    gap: 15
+    gap: 18
 
   },
 
@@ -367,11 +415,11 @@ const styles = StyleSheet.create({
 
   colorDot: {
 
-    width: 10,
+    width: 11,
 
-    height: 10,
+    height: 11,
 
-    borderRadius: 5,
+    borderRadius: 6,
 
     marginRight: 6
 
@@ -387,9 +435,9 @@ const styles = StyleSheet.create({
 
     backgroundColor: "#EB9E64",
 
-    paddingVertical: 16,
+    paddingVertical: 18,
 
-    borderRadius: 30,
+    borderRadius: 32,
 
     alignItems: "center"
 
@@ -399,7 +447,7 @@ const styles = StyleSheet.create({
 
     color: "white",
 
-    fontSize: 20,
+    fontSize: 22,
 
     fontFamily: "InstrumentSerif"
 
